@@ -67,6 +67,14 @@ Coded by www.creative-tim.com
       left: 0;
       top: 0;
     }
+
+    .form-group b {
+      color: #f46e6b;
+    }
+
+    .form-group {
+      width: 300px
+    }
   </style>
 </head>
 
@@ -204,37 +212,32 @@ Coded by www.creative-tim.com
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <form>
+            <form id="form">
               <div class="form-group">
-                <label for="product">產品名稱</label>
-                <input type="text" class="form-control" id="product" aria-describedby="emailHelp"
-                  placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                  else.</small>
+                <label for="product">產品名稱</label><b>*</b>
+                <input type="text" class="form-control" id="product" placeholder="請輸入產品名稱">
               </div>
               <div class="mb-3">
                 <label for="image">圖片</label>
                 <input type="file" class="form-control-file" id="image">
               </div>
               <div class="form-group">
-                <label for="price">價格</label>
-                <input type="text" class="form-control" id="price" aria-describedby="emailHelp"
-                  placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                  else.</small>
+                <label for="price">價格</label><b>*</b>
+                <input type="text" class="form-control" id="price" placeholder="請輸入產品價格" required>
               </div>
               <div class="form-group">
-                <label for="class">類別</label>
+                <label for="class">類別</label><b>*</b>
                 <select class="form-control" id="class">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  <option>所有餐點</option>
+                  <option>夢幻吮指回味區</option>
+                  <option>綜合炸物經選區</option>
+                  <option>新鱻魚漿製品區</option>
+                  <option>健康鮮脆蔬菜區</option>
+                  <option>心滿意足甜食區</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="hot">熱門</label><br>
+                <label for="hot">熱門</label><b>*</b><br>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="hot1" value="true">
                   <label class="form-check-label  pl-1" for="hot1">是</label>
@@ -244,7 +247,7 @@ Coded by www.creative-tim.com
                   <label class="form-check-label  pl-1" for="hot0">否</label>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button id="#CreatePoduct" type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
         </div>
@@ -293,6 +296,55 @@ Coded by www.creative-tim.com
     $(document).ready(function () {
       demo.initGoogleMaps();
     });
+    $("#form").submit(function (e) {
+      e.preventDefault()
+      submitcreatePoduct()
+    })
+
+    function submitcreatePoduct() {
+      var inputProduct = $("#product").val().replace(/\s*/g, "");
+      var inputImage = $("#image").val();
+      var inputPrice = $("#price").val();
+      var inputClass = $("#class").val();
+      var inputHot = $("input[name='inlineRadioOptions']").val();
+
+      var request_data = `
+      {
+        "product_name":"${inputProduct}",
+        "price":${inputPrice},
+        "image":"sasas",
+        "category":"${inputClass}",
+        "is_hot":${inputHot}
+      }
+      `;
+
+      if ((inputProduct != "") && (inputPrice != "") && (inputImage != "") && (inputClass != "") && (inputHot != "")) {
+        console.log(request_data)
+        $.ajax({
+          url: '/create/product',
+          type: "POST",
+          data: request_data,
+          dataType: "json",
+          contentType: "application/json",
+          success: function (data, status) {
+            //var redirect_target = function (redirectUrl) {
+            alert("新增產品成功")
+            window.location.href = "tables"
+            //var form = $('<form action="' + redirectUrl + '" method="post"></form>');
+            //$('body').append(form);
+            //$(form).submit();
+            //};
+            //redirect_target("/login");
+          },
+          error: function (textStatus) {
+            alert("新增產品失敗");
+            console.log(textStatus)
+          }
+        });
+      }
+      //console.log(request_data)
+    }
+
   </script>
 </body>
 

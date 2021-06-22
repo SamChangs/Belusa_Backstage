@@ -282,6 +282,7 @@
   </div>
   <script src="../assets/js/core/jquery.min.js"></script>
   <script>
+    // 註冊和登入表單功能
     $("#SignUpbutton").click(function () {
       submitsingupData()
     })
@@ -320,7 +321,7 @@
       if ((inputstorename != "") && (inputAccount != "") && (inputPassword != "") && (inputRepeatPassword != "") && (inputAccesKey != "")) {
         if (inputPassword === inputRepeatPassword) {
           $.ajax({
-            url: `http://127.0.0.1:8000/users?accesskey=${inputAccesKey}`,
+            url: `/users?accesskey=${inputAccesKey}`,
             type: "POST",
             data: request_data,
             dataType: "json",
@@ -368,7 +369,7 @@
 
       if ((inputAccount != "") && (inputPassword != "")) {
         $.ajax({
-          url: "http://127.0.0.1:8000/token",
+          url: "/token",
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -401,6 +402,9 @@
       }
       else { }
     }
+
+
+
 
   </script>
 

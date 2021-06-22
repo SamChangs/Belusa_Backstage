@@ -205,121 +205,21 @@ Coded by www.creative-tim.com
                       </th>
                     </thead>
                     <tbody>
+                      {% for product in productpric %}
                       <tr>
+                        <td>{{product.p_id}}</td>
+                        <td>{{product.product_name}}</td>
+                        <td></td>
+                        <td>{{product.price}}</td>
+                        <td>{{product.category}}</td>
+                        <td> {{product.is_hot}} </td>
                         <td>
-                          1
-                        </td>
-                        <td>
-                          貝稑逤雙飛雞翅(2隻)
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                          $35
-                        </td>
-                        <td>
-                          夢幻
-                        </td>
-                        <td>
-                          true
-                        </td>
-                        <td>
-                          修改/刪除
+                          <a href="/update/item/{{product.p_id}}">修改</a>
+                          /
+                          <a href="#" class="del" data-id="{{product.p_id}}">刪除</a>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          2
-                        </td>
-                        <td>
-                          里肌豬隊友片片(3個)
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                          $40
-                        </td>
-                        <td>
-                          夢幻
-                        </td>
-                        <td>
-                          true
-                        </td>
-                        <td>
-                          修改/刪除
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          3
-                        </td>
-                        <td>
-                          雞腿仁排
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                          $45
-                        </td>
-                        <td>
-                          夢幻
-                        </td>
-                        <td>
-                          true
-                        </td>
-                        <td>
-                          修改/刪除
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          4
-                        </td>
-                        <td>
-                          貝稑逤香雞排
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                          $60
-                        </td>
-                        <td>
-                          夢幻
-                        </td>
-                        <td>
-                          true
-                        </td>
-                        <td>
-                          修改/刪除
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          5
-                        </td>
-                        <td>
-                          脫一半香雞排(沾薄粉)
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                          $60
-                        </td>
-                        <td>
-                          夢幻
-                        </td>
-                        <td>
-                          true
-                        </td>
-                        <td>
-                          修改/刪除
-                        </td>
-                      </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
                 </div>
@@ -369,6 +269,25 @@ Coded by www.creative-tim.com
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="assets/demo/demo.js"></script>
   <script>
+    $('.del').click(function () {
+      const pid = $(this).attr('data-id');
+      var msg = `您真的確定要刪除 ${pid} 號產品嗎？\n\n請確認！`;
+      if (confirm(msg) == true) {
+        $.ajax({
+          url: `/delete/item/${pid}`,
+          type: "DELETE",
+          success: function (data, status) {
+            alert("刪除產品成功")
+            window.location.href = "/tables"
+          },
+          error: function (textStatus) {
+            alert("刪除產品失敗");
+            console.log(textStatus)
+          }
+        });
+      }
+    })
+
     function SelectText(element) {
       var doc = document,
         text = element,
