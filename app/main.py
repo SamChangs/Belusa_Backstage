@@ -1,4 +1,3 @@
-from sqlalchemy.sql.expression import true
 import uvicorn
 from fastapi import FastAPI, Depends, HTTPException, status, Request, Response, Cookie
 from fastapi.responses import RedirectResponse
@@ -6,24 +5,17 @@ from routers import items, users, webtemplates
 from Entity.meta import *
 from Model.OAuth2 import *
 from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
-app.mount("/assets", StaticFiles(directory="../assets"), name="assets")
-
-templates = Jinja2Templates(directory="../templates")
 
 '''
-apiroute
+aporoute
 '''
 app.include_router(users.router)
 app.include_router(items.router)
 app.include_router(webtemplates.router)
-                           
-
-
-@ app.get("/auth/logout", response_class=HTMLResponse)
+            
+@app.get("/auth/logout", response_class=HTMLResponse)
 def logout():
    response = RedirectResponse(url="/login")
    response.delete_cookie("access_token")
