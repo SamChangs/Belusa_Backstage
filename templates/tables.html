@@ -29,10 +29,10 @@ Coded by www.creative-tim.com
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="assets/demo/demo.css" rel="stylesheet" />
+  <link href="/assets/demo/demo.css" rel="stylesheet" />
 </head>
 
 <body class="">
@@ -55,31 +55,31 @@ Coded by www.creative-tim.com
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a href="./dashboard">
+            <a href="/dashboard">
               <i class="nc-icon nc-bank"></i>
               <p>產品分析</p>
             </a>
           </li>
           <li class="active">
-            <a href="./tables">
+            <a href="/tables">
               <i class="nc-icon nc-tile-56"></i>
               <p>產品列表</p>
             </a>
           </li>
           <li>
-            <a href="./icons">
+            <a href="/icons">
               <i class="nc-icon nc-diamond"></i>
               <p>分類管理</p>
             </a>
           </li>
           <li>
-            <a href="./notifications">
+            <a href="/notifications">
               <i class="nc-icon nc-bell-55"></i>
               <p>訂單管理</p>
             </a>
           </li>
           <li>
-            <a href="./map">
+            <a href="/map">
               <i class="nc-icon nc-pin-3"></i>
               <p>地點管理</p>
             </a>
@@ -112,6 +112,7 @@ Coded by www.creative-tim.com
               </button>
             </div>
             <a class="navbar-brand" href="javascript:;">產品列表</a>
+            <button onclick="logout()">logout</button>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
             aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,8 +175,8 @@ Coded by www.creative-tim.com
                       </div>
                     </div>
                   </div>
-                  <a href="./create-tables" class="btn ml-5 btn-success btn-lg active" role="button"
-                    aria-pressed="true"> 新增</a>
+                  <a href="/create-tables" class="btn ml-5 btn-success btn-lg active" role="button" aria-pressed="true">
+                    新增</a>
                 </div>
               </div>
               <div class="card-body">
@@ -254,20 +255,20 @@ Coded by www.creative-tim.com
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="assets/js/core/jquery.min.js"></script>
-  <script src="assets/js/core/popper.min.js"></script>
-  <script src="assets/js/core/bootstrap.min.js"></script>
-  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="/assets/js/core/jquery.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->
-  <script src="assets/js/plugins/chartjs.min.js"></script>
+  <script src="/assets/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
-  <script src="assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="/assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+  <script src="/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-  <script src="assets/demo/demo.js"></script>
+  <script src="/assets/demo/demo.js"></script>
   <script>
     $('.del').click(function () {
       const pid = $(this).attr('data-id');
@@ -287,6 +288,19 @@ Coded by www.creative-tim.com
         });
       }
     })
+
+    function logout() {
+      console.log(66)
+      $.ajax({
+        url: "/auth/logout",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json",
+        complete() {
+          window.location.href = "/login"
+        }
+      })
+    }
 
     function SelectText(element) {
       var doc = document,

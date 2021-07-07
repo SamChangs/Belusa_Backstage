@@ -369,7 +369,7 @@
 
       if ((inputAccount != "") && (inputPassword != "")) {
         $.ajax({
-          url: "/token",
+          url: "/login_user",
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -380,7 +380,7 @@
           },
           success: function (data, status) {
             //var redirect_target = function (redirectUrl) {
-            alert("登入成功")
+
             window.location.href = "dashboard"
             //var form = $('<form action="' + redirectUrl + '" method="post"></form>');
             //$('body').append(form);
