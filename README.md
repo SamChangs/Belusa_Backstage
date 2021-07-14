@@ -5,7 +5,6 @@
 - uvicorn main:app --reload
 
 
-
 {
   "storename": "belusa",
   "account": "pui",

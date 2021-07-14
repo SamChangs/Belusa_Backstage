@@ -1,10 +1,14 @@
-from typing import Optional
-from fastapi import Cookie
+from fastapi import Cookie, Depends, status
 from fastapi import HTTPException
+from typing import Optional
 
-
-async def read_tables(access_token: Optional[str] = Cookie(None)):
+async def auth_pages(access_token: Optional[str] = Cookie(None)):
     if access_token == None:
-        raise HTTPException(status_code=400, detail="not signed in")
+        return False
 
-      
+async def verify_key(access_token: Optional[str] = Cookie(None)):
+    if access_token == None:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+
+

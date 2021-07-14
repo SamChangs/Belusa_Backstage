@@ -1,7 +1,9 @@
 import uvicorn
 from fastapi import FastAPI, Depends, HTTPException, status, Request, Response, Cookie
 from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from routers import items, users, webtemplates
+import dependencies
 from Entity.meta import *
 from Model.OAuth2 import *
 from fastapi.responses import HTMLResponse
@@ -14,7 +16,10 @@ aporoute
 app.include_router(users.router)
 app.include_router(items.router)
 app.include_router(webtemplates.router)
-            
+
+app.mount("/static", StaticFiles(directory="../static"), name="static")
+
+
 @app.get("/auth/logout", response_class=HTMLResponse)
 def logout():
    response = RedirectResponse(url="/login")

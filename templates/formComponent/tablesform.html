@@ -18,7 +18,7 @@ Coded by www.creative-tim.com
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="icon" type="image/png" href=" {{ url_for('static', path='/img/favicon.pns') }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     後台管理系統
@@ -29,10 +29,11 @@ Coded by www.creative-tim.com
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <link href="{{ url_for('static', path='/css/bootstrap.min.css') }}" rel="stylesheet" />
+  <link href="{{ url_for('static', path='/css/paper-dashboard.css?v=2.0.1') }}" rel="stylesheet" />
+
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="assets/demo/demo.css" rel="stylesheet" />
+  <link href="{{ url_for('static', path='/demo/demo.css') }}" rel="stylesheet" />
   <style>
     .rwd-16by9 {
       display: block;
@@ -84,7 +85,7 @@ Coded by www.creative-tim.com
       <div class="logo">
         <a href="https://www.creative-tim.com" class="simple-text logo-mini">
           <div class="logo-image-small">
-            <img src="assets/img/logo-small.png">
+            <img src="{{ url_for('static', path='/img/logo-small.png') }}">
           </div>
           <!-- <p>CT</p> -->
         </a>
@@ -133,11 +134,11 @@ Coded by www.creative-tim.com
               <p>使用者管理</p>
             </a>
           </li>
-          <li class="active-pro">
-            <a href="">
-              <i class="nc-icon nc-spaceship"></i>
-              <p>系統管理</p>
-            </a>
+
+          <a href="">
+            <i class="nc-icon nc-spaceship"></i>
+            <p>系統管理</p>
+          </a>
           </li>
         </ul>
       </div>
@@ -197,8 +198,7 @@ Coded by www.creative-tim.com
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-rotate" href="javascript:;">
-                  <i class="nc-icon nc-settings-gear-65"></i>
+                          <button onclick="logout()" type="button" class="btn btn-primary">登出</button>
                   <p>
                     <span class="d-lg-none d-md-block">帳戶設定</span>
                   </p>
@@ -278,20 +278,21 @@ Coded by www.creative-tim.com
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="assets/js/core/jquery.min.js"></script>
-  <script src="assets/js/core/popper.min.js"></script>
-  <script src="assets/js/core/bootstrap.min.js"></script>
-  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="{{ url_for('static', path='/js/core/jquery.min.js') }}"></script>
+
+  <script src="{{ url_for('static', path='/js/core/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', path='/js/core/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', path='/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->
-  <script src="assets/js/plugins/chartjs.min.js"></script>
+  <script src="{{ url_for('static', path='/js/plugins/chartjs.min.js') }}"></script>
   <!--  Notifications Plugin    -->
-  <script src="assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="{{ url_for('static', path='/js/plugins/bootstrap-notify.js') }}"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script>
+  <script src="{{ url_for('static', path='/js/paper-dashboard.min.js?v=2.0.1') }}" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-  <script src="assets/demo/demo.js"></script>
+  <script src="{{ url_for('static', path='/demo/demo.js') }}"></script>
   <script>
     $(document).ready(function () {
       demo.initGoogleMaps();
@@ -323,6 +324,9 @@ Coded by www.creative-tim.com
         $.ajax({
           url: '/create/product',
           type: "POST",
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')  //取得認證token傳回oauth2
+          },
           data: request_data,
           dataType: "json",
           contentType: "application/json",

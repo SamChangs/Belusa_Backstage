@@ -2,8 +2,8 @@ import os
 import databases
 from fastapi import FastAPI
 from dotenv import load_dotenv
-from tortoise.models import Model 
-from tortoise import fields 
+from tortoise.models import Model
+from tortoise import fields
 from passlib.hash import bcrypt
 from pydantic import validator, BaseModel
 from tortoise.contrib.fastapi import register_tortoise
@@ -18,15 +18,15 @@ app = FastAPI()
 '''
 繼承Model使class可變為資料表
 '''
-class User(Model): 
+class User(Model):
     id = fields.IntField(pk=True) #主鍵必不可少
     storename = fields.CharField(20, null=False)
     account = fields.CharField(50, unique=True, null=False)
     password_hash = fields.CharField(128,null=False)
-    
+
     def verify_password(self, password):
         return bcrypt.verify(password, self.password_hash)
-        
+
     @validator('password')
     def password_rules(cls, v):
         if len(v) < 4:
@@ -43,13 +43,12 @@ class User(Model):
 '''
 輸出使用者資料，不包含密碼
 '''
-class UserOut(BaseModel): 
-    id : int
-    storename : str 
+class UserOut(BaseModel):
+    storename : str
     account : str
 
 
-class Order(Model): 
+class Order(Model):
     o_id = fields.IntField(pk=True) #主鍵必不可少
     oder_name = fields.CharField(20, null=False)
     price = fields.IntField (max_value=5,unique=True)
@@ -57,7 +56,7 @@ class Order(Model):
     add_time = fields.DatetimeField()
 
 
-class Product(Model): 
+class Product(Model):
     p_id = fields.IntField(pk=True) #主鍵必不可少
     product_name = fields.CharField(20, null=False,unique=True)
     price = fields.IntField(max_value=5,null=False)
@@ -82,10 +81,15 @@ class Product(Model):
         assert v.isalnum(), 'must be alphanumeric'
         assert v != '', 'Empty strings are not allowed.'
         return v
-    
-class Category(Model): 
+
+class Category(Model):
     c_id = fields.IntField(pk=True) #主鍵必不可少
     category_name = fields.CharField(20, null=False)
     add_time = fields.DatetimeField(auto_now_add=True)
-   
+
+    @validator('category_name')
+    def category_name_alphanumeric(cls, v):
+        assert v.isalnum(), 'must be alphanumeric'
+        assert v != '', 'Empty strings are not allowed.'
+        return v
 

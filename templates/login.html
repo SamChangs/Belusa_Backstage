@@ -280,7 +280,7 @@
       </div>
     </div>
   </div>
-  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="{{url_for('static', path='/js/core/jquery.min.js') }}"></script>
   <script>
     // 註冊和登入表單功能
     $("#SignUpbutton").click(function () {
@@ -369,7 +369,7 @@
 
       if ((inputAccount != "") && (inputPassword != "")) {
         $.ajax({
-          url: "/login_user",
+          url: "/auth/login",
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -382,6 +382,7 @@
             //var redirect_target = function (redirectUrl) {
 
             window.location.href = "dashboard"
+            localStorage.setItem('access_token', data.access_token) //儲存login的access_token在localStorage
             //var form = $('<form action="' + redirectUrl + '" method="post"></form>');
             //$('body').append(form);
             //$(form).submit();

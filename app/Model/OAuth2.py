@@ -26,7 +26,6 @@ class AuthUser():
                 detail='Invalid username or password'
             )
 
-   
         user_obj =  await  self.User_Pydantic.from_tortoise_orm(user)
 
         user_dict = user_obj.dict()
@@ -48,5 +47,5 @@ class AuthUser():
                 detail='Invalid username or password'
             )
 
-        return await self.UserIn_Pydantic.from_tortoise_orm(user)
+        return await self.User_Pydantic.from_tortoise_orm(user)
 
